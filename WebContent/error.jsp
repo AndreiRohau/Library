@@ -16,5 +16,7 @@ error page!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 <h1>hmmm: </h1>
 <%=message%>
  <h1>occupied</h1> 
+ 
+ <h1><a href="index.jsp">Return to INDEX</a></h1>
 </body>
 </html>

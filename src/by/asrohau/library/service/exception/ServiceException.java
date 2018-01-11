@@ -2,6 +2,11 @@ package by.asrohau.library.service.exception;
 
 public class ServiceException extends Exception{
 
+	/**
+	 * finally find out what is this UID
+	 */
+	private static final long serialVersionUID = 6765533323601079474L;
+
 	public ServiceException() {
 		super();
 	}

@@ -3,66 +3,100 @@ package by.asrohau.library.service.impl;
 import by.asrohau.library.bean.UserDTO;
 import by.asrohau.library.dao.DAOFactory;
 import by.asrohau.library.dao.UserDAO;
+import by.asrohau.library.dao.exception.DAOException;
 import by.asrohau.library.service.UserService;
+import by.asrohau.library.service.exception.ServiceException;
 
 public class UserServiceImpl implements UserService {
 
 	private final UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
 	public UserServiceImpl() {
+
 	}
 
 	@Override
 	public boolean validation(String login, String password) {
-		// TODO Auto-generated method stub
-
-		return false;
-	}
-
-	@Override
-	public UserDTO logination(String login, String password) {
-
-		// validation!!! stub
-
-		UserDTO userDTO = userDAO.findUser(login, password);
-
-		return userDTO;
-	}
-
-	@Override
-	public boolean registration(String login, String password) {
-
-		// validation!!! stub
-		
-		boolean result = false;
-		if (userDAO.findUser(login, password) == null) {
-			result = userDAO.saveUser(login, password);
+		String toCompare = "";
+		if (!toCompare.equals(login.trim()) && !toCompare.equals(password.trim())) {
+			return true;
+		} else {
+			return false;
 		}
-		return result;
 	}
 
 	@Override
-	public boolean changePassword(String login, String password, String newPassword) {
-		
+	public UserDTO logination(String login, String password) throws ServiceException {
+
 		// validation!!! stub
-		
-		boolean result = false;
-		if (userDAO.findUser(login, password) != null) {
-			result = userDAO.changePassword(login, password, newPassword);
+		if (validation(login, password)) {
+
+			try {
+				return userDAO.findUserWithLoginAndPassword(login, password);
+			} catch (DAOException e) {
+				throw new ServiceException(e);
+			}
+
 		}
-		return result;
+		
+		throw new ServiceException("by.asrohau.library.service.impl.UserServiceImpl.logination(): Login or password is empty");
 	}
 
 	@Override
-	public boolean deleteUser(String login, String password) {
+	public boolean registration(String login, String password) throws ServiceException {
 
 		// validation!!! stub
-		
-		boolean result = false;
-		if (userDAO.findUser(login, password) != null) {
-			result = userDAO.deleteUser(login, password);
+		if (validation(login, password)) {
+
+			try {
+				if (userDAO.findUserWithLogin(login) == null) {
+					return userDAO.saveUser(login, password);
+				}
+				return false;
+			} catch (DAOException e) {
+				throw new ServiceException(e);
+			}
 		}
-		return result;
+
+		throw new ServiceException("by.asrohau.library.service.impl.UserServiceImpl.registration(): Login or password is empty");
+	}
+
+	@Override
+	public boolean changePassword(String login, String password, String newPassword) throws ServiceException {
+
+		// validation!!! stub
+		if (validation(login, password)) {
+
+			try {
+				if (userDAO.findUserWithLoginAndPassword(login, password) != null) {
+					return userDAO.changePassword(login, password, newPassword);
+				}
+				return false;
+			} catch (DAOException e) {
+				throw new ServiceException(e);
+			}
+		}
+
+		throw new ServiceException("by.asrohau.library.service.impl.UserServiceImpl.changePassword(): Login or password is empty");
+	}
+
+	@Override
+	public boolean deleteUser(String login, String password) throws ServiceException {
+
+		// validation!!! stub
+		if (validation(login, password)) {
+
+			try {
+				if (userDAO.findUserWithLoginAndPassword(login, password) != null) {
+					return userDAO.deleteUser(login, password);
+				}
+				return false;
+			} catch (DAOException e) {
+				throw new ServiceException(e);
+			}
+		}
+
+		throw new ServiceException("by.asrohau.library.service.impl.UserServiceImpl.deleteUser(): Login or password is empty");
 	}
 
 }

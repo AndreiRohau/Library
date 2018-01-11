@@ -9,37 +9,42 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.asrohau.library.bean.UserDTO;
 import by.asrohau.library.controller.command.Command;
+import by.asrohau.library.controller.exception.ControllerException;
 import by.asrohau.library.service.ServiceFactory;
 import by.asrohau.library.service.UserService;
+import by.asrohau.library.service.exception.ServiceException;
 
-public class LoginationCommand implements Command{
+public class LoginationCommand implements Command {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
 		System.out.println("We got to logination");
-		
+
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
-		
+
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
 		UserService userService = serviceFactory.getUserService();
-		
+
 		UserDTO userDTO = null;
-		
-		userDTO = userService.logination(login, password);
-		
-		String goToPage;
-		if(userDTO != null) {
-			request.setAttribute("myuser", userDTO);
-			goToPage= "/WEB-INF/jsp/main.jsp";
-		}else {
-			goToPage= "error.jsp";
-			request.setAttribute("errorMessage", "no such user");
-		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(goToPage);
+
 		try {
+			userDTO = userService.logination(login, password);
+			
+			String goToPage;
+			if (userDTO != null) {
+				request.setAttribute("myuser", userDTO);
+				goToPage = "/WEB-INF/jsp/main.jsp";
+			} else {
+				goToPage = "error.jsp";
+				request.setAttribute("errorMessage", "no such user");
+			}
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher(goToPage);
 			dispatcher.forward(request, response);
+			
+		} catch (ServiceException e) {
+			throw new ControllerException(e);
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,6 +52,7 @@ public class LoginationCommand implements Command{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 }

@@ -13,7 +13,7 @@
 <body>
 
 <h3>Library</h3><hr/><hr/>
-<h3>Привет, Hello, 您好！Dear, <font size="7"><%=userDTO.getLogin()%></font>> !!!! </h3>
+<h3>Привет！Dear, <font size="8"><%=userDTO.getLogin()%></font>> !!!! ------------------ <font size="8">MAIN</font></h3>
 
 <!-- CHANGE PASSWORD -->
 <hr/>

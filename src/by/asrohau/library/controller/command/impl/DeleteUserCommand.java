@@ -8,13 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.asrohau.library.controller.command.Command;
+import by.asrohau.library.controller.exception.ControllerException;
 import by.asrohau.library.service.ServiceFactory;
 import by.asrohau.library.service.UserService;
+import by.asrohau.library.service.exception.ServiceException;
 
-public class DeleteUserCommand implements Command{
+public class DeleteUserCommand implements Command {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
 		System.out.println("We got to delete User Command");
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
@@ -24,19 +26,22 @@ public class DeleteUserCommand implements Command{
 
 		boolean isChanged = false;
 
-		isChanged = userService.deleteUser(login, password);
-		
-		String goToPage;
-		if (isChanged) {
-			goToPage = "index.jsp";
-		} else {
-			goToPage = "error.jsp";
-			request.setAttribute("errorMessage", "cannot delete user");
-		}
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher(goToPage);
 		try {
+			isChanged = userService.deleteUser(login, password);
+			
+			String goToPage;
+			if (isChanged) {
+				goToPage = "index.jsp";
+			} else {
+				goToPage = "error.jsp";
+				request.setAttribute("errorMessage", "cannot delete user");
+			}
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher(goToPage);
 			dispatcher.forward(request, response);
+			
+		} catch (ServiceException e) {
+			throw new ControllerException(e);
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +49,7 @@ public class DeleteUserCommand implements Command{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

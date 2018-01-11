@@ -2,12 +2,14 @@ package by.asrohau.library.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.asrohau.library.controller.command.Command;
+import by.asrohau.library.controller.exception.ControllerException;
 
 public class FrontController extends HttpServlet {
 	
@@ -33,7 +35,14 @@ public class FrontController extends HttpServlet {
 		
 		CommandName commandName = CommandName.valueOf(request.getParameter("command").toUpperCase());
 		Command command = commandProvider.getCommand(commandName);
-		command.execute(request, response);
+		try {
+			command.execute(request, response);
+		} catch (ControllerException e) {
+			
+			request.setAttribute("errorMessage", e.toString());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+			dispatcher.forward(request, response);
+		}
 		
 	}
 

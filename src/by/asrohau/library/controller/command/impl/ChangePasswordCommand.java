@@ -9,13 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.asrohau.library.bean.UserDTO;
 import by.asrohau.library.controller.command.Command;
+import by.asrohau.library.controller.exception.ControllerException;
 import by.asrohau.library.service.ServiceFactory;
 import by.asrohau.library.service.UserService;
+import by.asrohau.library.service.exception.ServiceException;
 
 public class ChangePasswordCommand implements Command {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
 
 		System.out.println("We got to changePassword");
 		String login = request.getParameter("login");
@@ -27,24 +29,26 @@ public class ChangePasswordCommand implements Command {
 
 		boolean isChanged = false;
 
-		isChanged = userService.changePassword(login, password, newPassword);
-
-		UserDTO userDTO = new UserDTO();
-		userDTO.setLogin(login);
-		
-		String goToPage;
-		if (isChanged) {
-			request.setAttribute("myuser", userDTO);
-			request.setAttribute("isChanged", "new password is: " + newPassword);
-			goToPage = "/WEB-INF/jsp/main.jsp";
-		} else {
-			goToPage = "error.jsp";
-			request.setAttribute("errorMessage", "cannot change password");
-		}
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher(goToPage);
 		try {
+			isChanged = userService.changePassword(login, password, newPassword);
+			UserDTO userDTO = new UserDTO();
+			userDTO.setLogin(login);
+
+			String goToPage;
+			if (isChanged) {
+				request.setAttribute("myuser", userDTO);
+				request.setAttribute("isChanged", "new password is: " + newPassword);
+				goToPage = "/WEB-INF/jsp/main.jsp";
+			} else {
+				goToPage = "error.jsp";
+				request.setAttribute("errorMessage", "cannot change password");
+			}
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher(goToPage);
 			dispatcher.forward(request, response);
+
+		} catch (ServiceException e) {
+			throw new ControllerException(e);
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,6 +56,7 @@ public class ChangePasswordCommand implements Command {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 }

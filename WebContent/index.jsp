@@ -9,7 +9,7 @@
 </head>
 <body>
 <h3>Library</h3><hr/>
-<h1>Привет, Hello, 您好！</h1>
+<h1>您好！---------INDEX</h1>
 <hr/><hr/>
 
 <h2>To login insert personal data below</h2>
