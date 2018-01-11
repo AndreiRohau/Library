@@ -38,8 +38,9 @@ public class UserServiceImpl implements UserService {
 			}
 
 		}
-		
-		throw new ServiceException("by.asrohau.library.service.impl.UserServiceImpl.logination(): Login or password is empty");
+
+		throw new ServiceException(
+				"by.asrohau.library.service.impl.UserServiceImpl.logination(): Login or password is empty");
 	}
 
 	@Override
@@ -58,7 +59,8 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 
-		throw new ServiceException("by.asrohau.library.service.impl.UserServiceImpl.registration(): Login or password is empty");
+		throw new ServiceException(
+				"by.asrohau.library.service.impl.UserServiceImpl.registration(): Login or password is empty");
 	}
 
 	@Override
@@ -77,7 +79,8 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 
-		throw new ServiceException("by.asrohau.library.service.impl.UserServiceImpl.changePassword(): Login or password is empty");
+		throw new ServiceException(
+				"by.asrohau.library.service.impl.UserServiceImpl.changePassword(): Login or password is empty");
 	}
 
 	@Override
@@ -96,7 +99,8 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 
-		throw new ServiceException("by.asrohau.library.service.impl.UserServiceImpl.deleteUser(): Login or password is empty");
+		throw new ServiceException(
+				"by.asrohau.library.service.impl.UserServiceImpl.deleteUser(): Login or password is empty");
 	}
 
 }

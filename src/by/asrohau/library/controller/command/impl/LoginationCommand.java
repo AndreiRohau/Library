@@ -30,7 +30,7 @@ public class LoginationCommand implements Command {
 
 		try {
 			userDTO = userService.logination(login, password);
-			
+
 			String goToPage;
 			if (userDTO != null) {
 				request.setAttribute("myuser", userDTO);
@@ -39,10 +39,10 @@ public class LoginationCommand implements Command {
 				goToPage = "error.jsp";
 				request.setAttribute("errorMessage", "no such user");
 			}
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher(goToPage);
 			dispatcher.forward(request, response);
-			
+
 		} catch (ServiceException e) {
 			throw new ControllerException(e);
 		} catch (ServletException e) {

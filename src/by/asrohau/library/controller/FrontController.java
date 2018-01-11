@@ -12,9 +12,9 @@ import by.asrohau.library.controller.command.Command;
 import by.asrohau.library.controller.exception.ControllerException;
 
 public class FrontController extends HttpServlet {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private final CommandProvider commandProvider = new CommandProvider();
 
 	public FrontController() {
@@ -30,20 +30,20 @@ public class FrontController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		System.out.println("in servlet : command : " + request.getParameter("command").toUpperCase());
-		
+
 		CommandName commandName = CommandName.valueOf(request.getParameter("command").toUpperCase());
 		Command command = commandProvider.getCommand(commandName);
 		try {
 			command.execute(request, response);
 		} catch (ControllerException e) {
-			
+
 			request.setAttribute("errorMessage", e.toString());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+
 	}
 
 }
