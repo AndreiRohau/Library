@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 	public boolean changePassword(String login, String password, String newPassword) throws ServiceException {
 
 		// validation!!! stub
-		if (validation(login, password)) {
+		if (validation(login, newPassword)) {
 
 			try {
 				if (userDAO.findUserWithLoginAndPassword(login, password) != null) {
