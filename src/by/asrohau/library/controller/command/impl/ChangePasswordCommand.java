@@ -38,7 +38,7 @@ public class ChangePasswordCommand implements Command {
 			if (isChanged) {
 				request.setAttribute("myuser", userDTO);
 				request.setAttribute("isChanged", "new password is: " + newPassword);
-				goToPage = "/WEB-INF/jsp/main.jsp";
+				goToPage = "/jsp/main.jsp";
 			} else {
 				goToPage = "error.jsp";
 				request.setAttribute("errorMessage", "cannot change password");
