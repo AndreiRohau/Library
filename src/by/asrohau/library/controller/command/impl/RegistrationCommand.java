@@ -26,7 +26,7 @@ public class RegistrationCommand implements Command {
 		UserService userService = serviceFactory.getUserService();
 
 		try {
-			isRegistered = userService.registration(login, password);
+			isRegistered = userService.registration(login.trim(), password.trim());
 			
 			String goToPage;
 			if (isRegistered) {
@@ -43,11 +43,9 @@ public class RegistrationCommand implements Command {
 		} catch (ServiceException e) {
 			throw new ControllerException(e);
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ControllerException(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ControllerException(e);
 		}
 
 	}

@@ -30,7 +30,7 @@ public class ChangePasswordCommand implements Command {
 		boolean isChanged = false;
 
 		try {
-			isChanged = userService.changePassword(login, password, newPassword);
+			isChanged = userService.changePassword(login.trim(), password.trim(), newPassword.trim());
 			UserDTO userDTO = new UserDTO();
 			userDTO.setLogin(login);
 
@@ -50,11 +50,9 @@ public class ChangePasswordCommand implements Command {
 		} catch (ServiceException e) {
 			throw new ControllerException(e);
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ControllerException(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ControllerException(e);
 		}
 
 	}

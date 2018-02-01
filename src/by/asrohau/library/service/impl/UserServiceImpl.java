@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean validation(String login, String password) {
 		String toCompare = "";
-		if (!toCompare.equals(login.trim()) && !toCompare.equals(password.trim())) {
+		if (!toCompare.equals(login) && !toCompare.equals(password)) {
 			return true;
 		} else {
 			return false;
@@ -39,8 +39,7 @@ public class UserServiceImpl implements UserService {
 
 		}
 
-		throw new ServiceException(
-				"by.asrohau.library.service.impl.UserServiceImpl.logination(): Login or password is empty");
+		return null;
 	}
 
 	@Override
@@ -53,14 +52,13 @@ public class UserServiceImpl implements UserService {
 				if (userDAO.findUserWithLogin(login) == null) {
 					return userDAO.saveUser(login, password);
 				}
-				return false;
+
 			} catch (DAOException e) {
 				throw new ServiceException(e);
 			}
 		}
 
-		throw new ServiceException(
-				"by.asrohau.library.service.impl.UserServiceImpl.registration(): Login or password is empty");
+		return false;
 	}
 
 	@Override
@@ -73,14 +71,13 @@ public class UserServiceImpl implements UserService {
 				if (userDAO.findUserWithLoginAndPassword(login, password) != null) {
 					return userDAO.changePassword(login, password, newPassword);
 				}
-				return false;
+				
 			} catch (DAOException e) {
 				throw new ServiceException(e);
 			}
 		}
 
-		throw new ServiceException(
-				"by.asrohau.library.service.impl.UserServiceImpl.changePassword(): Login or password is empty");
+		return false;
 	}
 
 	@Override
@@ -93,14 +90,13 @@ public class UserServiceImpl implements UserService {
 				if (userDAO.findUserWithLoginAndPassword(login, password) != null) {
 					return userDAO.deleteUser(login, password);
 				}
-				return false;
+				
 			} catch (DAOException e) {
 				throw new ServiceException(e);
 			}
 		}
 
-		throw new ServiceException(
-				"by.asrohau.library.service.impl.UserServiceImpl.deleteUser(): Login or password is empty");
+		return false;
 	}
 
 }

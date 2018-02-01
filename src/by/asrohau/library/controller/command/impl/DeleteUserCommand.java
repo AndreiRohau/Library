@@ -27,7 +27,7 @@ public class DeleteUserCommand implements Command {
 		boolean isChanged = false;
 
 		try {
-			isChanged = userService.deleteUser(login, password);
+			isChanged = userService.deleteUser(login.trim(), password.trim());
 			
 			String goToPage;
 			if (isChanged) {
@@ -43,11 +43,9 @@ public class DeleteUserCommand implements Command {
 		} catch (ServiceException e) {
 			throw new ControllerException(e);
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ControllerException(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ControllerException(e);
 		}
 
 	}

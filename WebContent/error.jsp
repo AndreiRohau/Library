@@ -6,16 +6,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Error page</title>
 </head>
 <body>
-error page!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-<br>
+
 <hr/>
 
-<h1>hmmm: </h1>
+<h1>Error ocupied:</h1>
 <%=message%>
- <h1>occupied</h1> 
+ <h1></h1> 
  
  <h1><a href="index.jsp">Return to INDEX</a></h1>
 </body>

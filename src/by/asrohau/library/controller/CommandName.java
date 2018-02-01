@@ -6,6 +6,7 @@ public enum CommandName {
 	LOGINATION,
 	CHANGE_PASSWORD,
 	DELETE_USER,
-	ADD_BOOK;
+	ADD_BOOK,
+	CHANGE_LANGUAGE;
 
 }

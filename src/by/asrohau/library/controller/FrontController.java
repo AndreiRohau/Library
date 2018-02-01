@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import by.asrohau.library.controller.command.Command;
 import by.asrohau.library.controller.exception.ControllerException;
@@ -36,6 +37,8 @@ public class FrontController extends HttpServlet {
 		CommandName commandName = CommandName.valueOf(request.getParameter("command").toUpperCase());
 		Command command = commandProvider.getCommand(commandName);
 		try {
+			HttpSession session = request.getSession(true);
+			session.getId();
 			command.execute(request, response);
 		} catch (ControllerException e) {
 

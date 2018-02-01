@@ -29,12 +29,13 @@ public class LoginationCommand implements Command {
 		UserDTO userDTO = null;
 
 		try {
-			userDTO = userService.logination(login, password);
+			userDTO = userService.logination(login.trim(), password.trim());
 
 			String goToPage;
 			if (userDTO != null) {
-				request.setAttribute("myuser", userDTO);
-				goToPage = "/WEB-INF/jsp/main.jsp";
+				//стартануть сессию юзера конкретного
+				request.setAttribute("userName", userDTO.getLogin());
+				goToPage = "/jsp/main.jsp";
 			} else {
 				goToPage = "error.jsp";
 				request.setAttribute("errorMessage", "no such user");
@@ -46,11 +47,9 @@ public class LoginationCommand implements Command {
 		} catch (ServiceException e) {
 			throw new ControllerException(e);
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ControllerException(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ControllerException(e);
 		}
 
 	}

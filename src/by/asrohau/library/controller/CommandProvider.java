@@ -4,6 +4,7 @@ import java.util.Map;
 
 import by.asrohau.library.controller.command.Command;
 import by.asrohau.library.controller.command.impl.AddBookCommand;
+import by.asrohau.library.controller.command.impl.ChangeLanguageCommand;
 import by.asrohau.library.controller.command.impl.ChangePasswordCommand;
 import by.asrohau.library.controller.command.impl.DeleteUserCommand;
 import by.asrohau.library.controller.command.impl.LoginationCommand;
@@ -21,6 +22,7 @@ public class CommandProvider {
 		commands.put(CommandName.CHANGE_PASSWORD, new ChangePasswordCommand());
 		commands.put(CommandName.DELETE_USER, new DeleteUserCommand());
 		commands.put(CommandName.ADD_BOOK, new AddBookCommand());
+		commands.put(CommandName.CHANGE_LANGUAGE, new ChangeLanguageCommand());
 		
 	}
 
